@@ -10,8 +10,7 @@ export const RequireAuth = ({ children }) => {
   useEffect(() => {
     auth
       .getSession()
-      .then((session) => {
-        console.log("Session: ", session);
+      .then(() => {
         setIsLogedin(true);
       })
       .catch((error) => {

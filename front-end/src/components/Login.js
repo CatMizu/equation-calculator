@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
-import styles from './Login.module.css';
-import { Link } from 'react-router-dom';
-import { useAuth } from '../utils/auth';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import styles from "./Login.module.css";
+import { useAuth } from "../utils/auth";
 
-const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const auth = useAuth();
   const navigate = useNavigate();
 
@@ -15,12 +14,12 @@ const Login = () => {
     try {
       const response = await auth.login(email, password);
       console.log("Login successful!", response);
-      navigate('/home');
+      navigate("/home");
     } catch (error) {
       console.error("Login failed", error);
     }
-    console.log('Email:', email);
-    console.log('Password:', password);
+    console.log("Email:", email);
+    console.log("Password:", password);
   };
 
   return (
@@ -47,9 +46,11 @@ const Login = () => {
         </div>
         <button type="submit">Login</button>
       </form>
-      <Link to="/signup" className={styles.signupLink}>Create a new account</Link>
+      <Link to="/signup" className={styles.signupLink}>
+        Create a new account
+      </Link>
     </div>
   );
-};
+}
 
 export default Login;

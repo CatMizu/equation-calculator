@@ -1,71 +1,45 @@
-// Home.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Equation from "./Equation";
+import { useAuth } from "../utils/auth";
 
 function Home() {
-  const [equation, setEquation] = useState("");
-  const [solveFor, setSolveFor] = useState("");
-  const [parameters, setParameters] = useState([]);
-
-  const addParameter = () => {
-    setParameters([...parameters, { key: "", value: "" }]);
+  const [equations, setEquations] = useState([]);
+  const auth = useAuth();
+  const exampleEquation = {
+    latex: "x=1",
+    parameters: [{ name: "", value: "" }],
   };
 
-  const handleParametersChange = (index, event) => {
-    const values = [...parameters];
-    if (event.target.name === "key") {
-      values[index].key = event.target.value;
-    } else {
-      values[index].value = event.target.value;
-    }
-    setParameters(values);
-  };
+  useEffect(() => {
+    const fetchEquations = async () => {
+      try {
+        const token = await auth.getSession();
+        const accessToken = token.access.token;
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/equations`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
 
-  const handleEquationChange = (event) => {
-    setEquation(event.target.value);
-  };
+        setEquations(response.data.equations);
+      } catch (error) {
+        console.error("Failed to fetch equations", error);
+      }
+    };
 
-  const handleSolveForChange = (event) => {
-    setSolveFor(event.target.value);
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    const parametersObject = parameters.reduce(
-      (acc, param) => ({ ...acc, [param.key]: param.value }),
-      {}
-    );
-
-    try {
-      const response = await axios.post(
-        "https://px4zqeyrb4.execute-api.us-east-1.amazonaws.com/dev/equation/solve",
-        {
-          latex: equation,
-          parameters: parametersObject,
-          solveFor,
-        }
-      );
-      console.log("Equation solved successfully!", response.data);
-    } catch (error) {
-      console.error("Failed to solve the equation", error.message);
-    }
-  };
+    fetchEquations();
+  }, []);
 
   return (
     <div>
-      <Equation
-        equation={equation}
-        handleEquationChange={handleEquationChange}
-        solveFor={solveFor}
-        handleSolveForChange={handleSolveForChange}
-        parameters={parameters}
-        handleParametersChange={handleParametersChange}
-      />
-
-      <button onClick={addParameter}>Add Parameter</button>
-      <button onClick={handleSubmit}>Submit</button>
+      <Equation equationData={exampleEquation} />
+      {equations.map((equationData, index) => (
+        <Equation key={index} equationData={equationData} />
+      ))}
     </div>
   );
 }

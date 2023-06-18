@@ -31,7 +31,11 @@
     "no-alert": "off",
     "no-console": "off",
     "import/prefer-default-export": "off",
-    "consistent-return": "off"
+    "consistent-return": "off",
+    "react/no-array-index-key": "off",
+    "import/no-extraneous-dependencies": "off",
+    "react/button-has-type": "off",
+    "react/self-closing-comp": "off"
   },
   "settings": {
     "react": {
