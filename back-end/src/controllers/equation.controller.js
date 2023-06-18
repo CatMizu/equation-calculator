@@ -1,7 +1,6 @@
 const httpStatus = require('http-status');
 const catchAsync = require('../utils/catchAsync');
 const { equationService } = require('../services');
-const ApiError = require('../utils/ApiError');
 
 const createEquation = catchAsync(async (req, res) => {
   const equation = await equationService.createEquation(req.body.latex, req.user.id);
@@ -18,11 +17,7 @@ const solveEquation = catchAsync(async (req, res) => {
 });
 
 const getEquations = catchAsync(async (req, res) => {
-  const { userId } = req.params;
-  if (userId !== req.user.id) {
-    throw new ApiError(httpStatus.FORBIDDEN, 'Forbidden');
-  }
-  const equations = await equationService.getEquationsByUserId(userId);
+  const equations = await equationService.getEquationsByUserId(req.user.id);
   res.send({ equations });
 });
 

@@ -21,14 +21,7 @@ const solveEquation = {
   }),
 };
 
-const getEquationsByUserId = {
-  params: Joi.object().keys({
-    userId: Joi.number().integer().required(),
-  }),
-};
-
 module.exports = {
   createEquation,
   solveEquation,
-  getEquationsByUserId,
 };
