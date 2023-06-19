@@ -29,8 +29,7 @@ function Signup() {
     }
 
     try {
-      const response = await auth.signUp(name, email, password);
-      console.log("sign up successful!", response);
+      await auth.signUp(name, email, password);
       navigate("/");
     } catch (error) {
       console.error("sign up failed", error);

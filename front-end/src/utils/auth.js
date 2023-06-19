@@ -45,9 +45,10 @@ function AuthProvider({ children }) {
   };
 
   const logout = async () => {
-    const tokens = Cookies.get("tokens");
+    const tokens = await getSession();
     if (tokens) {
-      const { refreshToken } = JSON.parse(tokens);
+      console.log(tokens);
+      const refreshToken = tokens.refresh.token;
 
       await apiClient.post("auth/logout", {
         refreshToken,

@@ -69,7 +69,6 @@ function Equation({ equationData, onSaveEquation, onDeleteEquation }) {
       );
       setSolution(response.data.solution);
       setDisplaySolveFor(`${solveFor} = `);
-      console.log("Equation solved successfully!", response.data.solution);
     } catch (error) {
       console.error("Failed to solve the equation", error);
     }
@@ -95,6 +94,7 @@ function Equation({ equationData, onSaveEquation, onDeleteEquation }) {
         </div>
         <h3>Solve for:</h3>
         <input
+          className={styles.solveForInput}
           type="text"
           value={solveFor}
           onChange={handleSolveForChange}

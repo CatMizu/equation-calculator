@@ -33,8 +33,7 @@ Token.init(
   },
   {
     sequelize,
-    modelName: 'Tokens',
-    tableName: 'Tokens',
+    modelName: 'Token',
     timestamps: true,
   }
 );

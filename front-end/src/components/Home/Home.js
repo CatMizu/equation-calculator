@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Equation from "../Equation/Equation";
 import { useAuth } from "../../utils/auth";
@@ -12,6 +13,7 @@ function Home() {
     latex: "\\sqrt{x^2}=4",
     parameters: { y: 1 },
   };
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchEquations = async () => {
@@ -38,8 +40,8 @@ function Home() {
 
   const handleSaveEquation = async (latex, parameters) => {
     try {
-      const token = await auth.getSession();
-      const accessToken = token.access.token;
+      const tokens = await auth.getSession();
+      const accessToken = tokens.access.token;
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/equations`,
         {
@@ -84,6 +86,15 @@ function Home() {
 
   return (
     <div className={styles["equation-container"]}>
+      <button
+        className={styles.logout}
+        onClick={() => {
+          auth.logout();
+          navigate("/");
+        }}
+      >
+        Logout
+      </button>
       <Equation
         equationData={exampleEquation}
         onDeleteEquation={handleDeleteEquation}

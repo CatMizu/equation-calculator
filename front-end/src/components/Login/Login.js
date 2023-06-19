@@ -12,14 +12,11 @@ function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await auth.login(email, password);
-      console.log("Login successful!", response);
+      await auth.login(email, password);
       navigate("/home");
     } catch (error) {
-      console.error("Login failed", error);
+      alert("Login failed", error);
     }
-    console.log("Email:", email);
-    console.log("Password:", password);
   };
 
   return (

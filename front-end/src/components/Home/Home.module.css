@@ -5,3 +5,18 @@
   background-color: #E0F7FA;
   gap: 20px;
 }
+
+.logout {
+  margin: 20px 0;
+  padding: 10px;
+  border: none;
+  background-color: #50daef;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logout:hover {
+  background-color: #e02d2d;
+}

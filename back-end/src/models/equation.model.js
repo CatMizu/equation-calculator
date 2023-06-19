@@ -20,8 +20,7 @@ Equation.init(
   },
   {
     sequelize,
-    modelName: 'Equations',
-    tableName: 'Equations',
+    modelName: 'Equation',
     timestamps: true,
   }
 );

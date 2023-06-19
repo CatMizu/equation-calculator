@@ -24,8 +24,7 @@ Parameter.init(
   },
   {
     sequelize,
-    modelName: 'Parameters',
-    tableName: 'Parameters',
+    modelName: 'Parameter',
     timestamps: true,
   }
 );
