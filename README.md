@@ -15,4 +15,18 @@ The application is containerized using Docker. You need to install Docker and Do
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/<Your GitHub Username>/EquationCalculator.git
+git clone [https://github.com/<Your GitHub Username>/EquationCalculator.git](https://github.com/CatMizu/equation-calculator.git)
+```
+2. Navigate to the project directory:
+
+```bash
+cd Equation\ Calculator/
+```
+3. Running the Application
+
+The application has been Dockerized, which means you can easily run the entire application just by using Docker Compose:
+
+```bash
+docker-compose up
+```
+The application will be accessible at http://localhost:4000.
