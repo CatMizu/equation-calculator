@@ -1,37 +1,98 @@
-/* Equation.css */
-.equation-container {
-    margin: 20px;
-    padding: 20px;
-    background-color: #e0f7fa;
-    border-radius: 10px;
-  }
-  
-  .equation-container h3 {
-    color: #006064;
-    margin-bottom: 10px;
-  }
-  
-  .equation-container input[type="text"] {
-    margin-bottom: 15px;
-  }
-  
-  .equation-container button {
-    margin-top: 10px;
-    margin-right: 10px;
-    padding: 10px;
-    border: none;
-    background-color: #4dd0e1;
-    color: white;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  .equation-container button:hover {
-    background-color: #00838f;
-  }
-  
-  .separator {
-    margin: 20px 0;
-    border-top: 1px solid #b2ebf2;
-  }
-  
+.equation-panel {
+  position: relative;
+  border: 1px solid #B2EBF2;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 0;
+  margin: 15px;
+  background-color: white;
+  border-radius: 10px;
+  width: 600px; 
+  min-height: 150px;
+}
+
+
+
+.equation-content {
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.delete-panel-button {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background-color: red;
+  border: none;
+  color: white;
+  width: 20px; /* Adjust the width of the button */
+  height: 20px; /* Adjust the height of the button */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0;
+  padding-bottom: 2px;
+
+}
+
+/* Define the hover effect for the button */
+.delete-panel-button:hover {
+  background-color: darkred;
+}
+
+
+
+input[type="text"] {
+  width: auto;
+  padding: 0.5em;
+  margin: 0.5em 0;
+  border: 1px solid #B2EBF2;
+  border-radius: 4px;
+  background-color: #E0F7FA;
+}
+
+button {
+  background-color: #4DD0E1;
+  border: none;
+  color: white;
+  padding: 10px 20px; /* Adjust the padding to control the size of the button */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  max-width: 30%; /* Set a maximum width for the button */
+  border-radius: 5px; /* Make the corners round */
+}
+
+
+
+button:hover {
+  background-color: #26C6DA;
+}
+
+.add-button {
+  background-color: #4DD0E1;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin: 4px 2px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 10px; /* 0 vertical padding, 10px horizontal padding */
+}
+

@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Equation from "./Equation";
 import { useAuth } from "../utils/auth";
+import styles from "./Home.module.css";
 
 function Home() {
   const [equations, setEquations] = useState([]);
   const auth = useAuth();
   const exampleEquation = {
+    id: 0,
     latex: "x+y=2",
     parameters: { y: 1 },
   };
@@ -35,10 +37,10 @@ function Home() {
   }, []);
 
   return (
-    <div>
+    <div className={styles["equation-container"]}>
       <Equation equationData={exampleEquation} />
-      {equations.map((equationData, index) => (
-        <Equation key={index} equationData={equationData} />
+      {equations.map((equationData) => (
+        <Equation key={equationData.id} equationData={equationData} />
       ))}
     </div>
   );

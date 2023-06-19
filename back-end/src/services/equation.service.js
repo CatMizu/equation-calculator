@@ -70,6 +70,7 @@ const getEquationsByUserId = async (userId) => {
   // Adjusting the structure of the result
   const result = user.equations.map((equation) => {
     return {
+      id: equation.id,
       latex: equation.latex,
       parameters: equation.parameters.reduce((obj, parameter) => {
         obj[parameter.name] = parameter.value;

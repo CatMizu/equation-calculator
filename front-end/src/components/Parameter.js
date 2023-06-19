@@ -4,7 +4,7 @@ import styles from "./Parameters.module.css";
 function Parameter({ parameter, onParameterChange, onParameterDelete }) {
   return (
     <div>
-      <label className={styles.labelField}>
+      <label>
         Key:
         <input
           type="text"
@@ -14,7 +14,7 @@ function Parameter({ parameter, onParameterChange, onParameterDelete }) {
           onChange={(event) => onParameterChange("name", event)}
         />
       </label>
-      <label className={styles.labelField}>
+      <label>
         Value:
         <input
           type="number"
@@ -24,7 +24,9 @@ function Parameter({ parameter, onParameterChange, onParameterDelete }) {
           onChange={(event) => onParameterChange("value", event)}
         />
       </label>
-      <button onClick={onParameterDelete}>Delete</button>
+      <button className={styles["delete-button"]} onClick={onParameterDelete}>
+        Delete
+      </button>
     </div>
   );
 }

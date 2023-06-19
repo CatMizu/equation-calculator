@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { addStyles, EditableMathField, StaticMathField } from "react-mathquill";
-import Parameter from "./Parameters";
+import Parameter from "./Parameter";
 import { useAuth } from "../utils/auth";
 import styles from "./Equation.module.css";
+import validateEquationInput from "../utils/equationInputValidator";
 
 addStyles();
 
@@ -12,6 +13,7 @@ function Equation({ equationData }) {
   const [solveFor, setSolveFor] = useState("");
   const [parameters, setParameters] = useState(equationData.parameters || {});
   const [solution, setSolution] = useState("");
+  const [displaySolveFor, setDisplaySolveFor] = useState("");
   const auth = useAuth();
 
   const addParameter = () => {
@@ -47,20 +49,7 @@ function Equation({ equationData }) {
   const handleSolveEquation = async (event) => {
     event.preventDefault();
 
-    if (!equation.includes(solveFor)) {
-      alert("The solveFor value must exist within the equation");
-      return;
-    }
-
-    if (!/^[a-zA-Z]{1}$/.test(solveFor)) {
-      alert("The solveFor value be a single letter");
-      return;
-    }
-
-    if (solveFor in parameters) {
-      alert("The solveFor value cannot be a parameter");
-      return;
-    }
+    validateEquationInput(equation, solveFor, parameters);
 
     try {
       const token = await auth.getSession();
@@ -79,6 +68,7 @@ function Equation({ equationData }) {
         }
       );
       setSolution(response.data.solution);
+      setDisplaySolveFor(`${solveFor} = `);
       console.log("Equation solved successfully!", response.data.solution);
     } catch (error) {
       console.error("Failed to solve the equation", error);
@@ -110,42 +100,51 @@ function Equation({ equationData }) {
   };
 
   return (
-    <div className={styles["equation-container"]}>
-      <h3>Equation:</h3>
-      <div>
-        <EditableMathField latex={equation} onChange={handleEquationChange} />
-      </div>
-      <h3>Solve for:</h3>
-      <input
-        type="text"
-        value={solveFor}
-        onChange={handleSolveForChange}
-        placeholder="Enter a variable to solve"
-      />
-
-      <h3>Parameters:</h3>
-      {Object.entries(parameters).map(([name, value], index) => (
-        <Parameter
-          key={index}
-          index={index}
-          parameter={{ name, value }}
-          onParameterChange={(newName, event) =>
-            handleParametersChange(name, newName, event)
-          }
-          onParameterDelete={() => deleteParameter(name)}
-        />
-      ))}
-
-      <button onClick={addParameter}>Add Parameter</button>
-      <button onClick={handleSolveEquation}>Solve</button>
-      <button onClick={handleSave}>Save Equation</button>
-      {solution && (
+    <div className={styles["equation-panel"]}>
+      <button className={styles["delete-panel-button"]}>x</button>
+      <div className={styles["equation-content"]}>
+        <h3>Equation:</h3>
         <div>
-          <h3>Solution:</h3>
-          <StaticMathField>{solution}</StaticMathField>
+          <EditableMathField latex={equation} onChange={handleEquationChange} />
         </div>
-      )}
-      <div className={styles.separator}></div>
+        <h3>Solve for:</h3>
+        <input
+          type="text"
+          value={solveFor}
+          onChange={handleSolveForChange}
+          placeholder="Enter a variable to solve"
+        />
+
+        <h3>Parameters:</h3>
+        {Object.entries(parameters).map(([name, value], index) => (
+          <Parameter
+            key={index}
+            index={index}
+            parameter={{ name, value }}
+            onParameterChange={(newName, event) =>
+              handleParametersChange(name, newName, event)
+            }
+            onParameterDelete={() => deleteParameter(name)}
+          />
+        ))}
+
+        <button className={styles["add-button"]} onClick={addParameter}>
+          Add Parameter
+        </button>
+        {solution && (
+          <div>
+            <h3>Solution:</h3>
+            <span>
+              {displaySolveFor}
+              <StaticMathField>{solution}</StaticMathField>
+            </span>
+          </div>
+        )}
+      </div>
+      <div className={styles["button-container"]}>
+        <button onClick={handleSolveEquation}>Solve</button>
+        <button onClick={handleSave}>Save Equation</button>
+      </div>
     </div>
   );
 }

@@ -1,7 +1,26 @@
 .inputField {
-  width: 3ch;
+  width: auto;
+  padding: 0.5em;
+  margin: 0.5em 0;
+  border: 1px solid #B2EBF2;
+  border-radius: 4px;
+  background-color: #E0F7FA;
 }
 
-.labelField {
-  margin-right: 20px;
+.delete-button, .add-button {
+  background-color: #4DD0E1;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin: 0px 2px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+}
+
+.delete-button:hover, .add-button:hover {
+  background-color: #26C6DA;
 }
