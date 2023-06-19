@@ -3,12 +3,8 @@ const catchAsync = require('../utils/catchAsync');
 const { equationService } = require('../services');
 
 const createEquation = catchAsync(async (req, res) => {
-  const equation = await equationService.createEquation(req.body.latex, req.user.id);
-  let parameters;
-  if (req.body.parameters) {
-    parameters = await equationService.createParameters(req.body.parameters, equation.id);
-  }
-  res.status(httpStatus.CREATED).send({ equation, parameters });
+  const equation = await equationService.createEquation(req.body.latex, req.body.parameters, req.user.id);
+  res.status(httpStatus.CREATED).send({ equation });
 });
 
 const solveEquation = catchAsync(async (req, res) => {
@@ -21,8 +17,14 @@ const getEquations = catchAsync(async (req, res) => {
   res.send({ equations });
 });
 
+const deleteEquation = catchAsync(async (req, res) => {
+  await equationService.deleteEquationById(req.user.id, req.params.id);
+  res.status(httpStatus.NO_CONTENT).send();
+});
+
 module.exports = {
   createEquation,
   solveEquation,
   getEquations,
+  deleteEquation,
 };

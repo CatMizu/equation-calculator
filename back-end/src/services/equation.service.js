@@ -1,28 +1,36 @@
 const nerdamer = require('nerdamer/all.min');
 const { User, Equation, Parameter } = require('../models');
-
-/**
- * Create a equation
- * @param {Object} latex
- * @param {number} userId
- * @returns {Promise<Equation>}
- */
-const createEquation = async (latex, userId) => {
-  const equation = await Equation.create({ latex, user: userId });
-  return equation.toJSON();
-};
+const sequelize = require('../config/database');
 
 /**
  * Create Parameters
  * @param {Object} parameters
  * @param {number} equationId
- * @returns {Promise<Array<Parameter>>}
+ * @returns {Promise<Object>}
  */
 const createParameters = async (parameters, equationId) => {
-  const createdParameters = await Promise.all(
+  await Promise.all(
     Object.entries(parameters).map(([name, value]) => Parameter.create({ name, value, equation: equationId }))
   );
-  return createdParameters.map((parameter) => parameter.toJSON());
+  return parameters;
+};
+
+/**
+ * Create a equation
+ * @param {Object} latex
+ * @param {number} userId
+ * @param {Object} parameters
+ * @returns {Promise<Equation>}
+ */
+const createEquation = async (latex, parameters, userId) => {
+  const equation = await Equation.create({ latex, user: userId });
+  let createdParameters = null;
+  if (parameters) {
+    createdParameters = await createParameters(parameters, equation.id);
+  }
+  const equationJson = equation.toJSON();
+  equationJson.parameters = createdParameters;
+  return equationJson;
 };
 
 /**
@@ -59,6 +67,7 @@ const getEquationsByUserId = async (userId) => {
             as: 'parameters',
           },
         ],
+        order: [['createdAt', 'DESC']],
       },
     ],
   });
@@ -82,9 +91,44 @@ const getEquationsByUserId = async (userId) => {
   return result;
 };
 
+/**
+ * Delete a equation by userId and equationId
+ * @param {number} userId
+ * @param {number} equationId
+ * @returns {Promise}
+ */
+const deleteEquationById = async (userId, equationId) => {
+  const transaction = await sequelize.transaction();
+  try {
+    const user = await User.findByPk(userId);
+    if (!user) throw new Error('User not found');
+
+    const equation = await Equation.findByPk(equationId);
+    if (!equation) throw new Error('Equation not found');
+
+    if (equation.user !== user.id) throw new Error('The equation does not belong to the user');
+
+    await Parameter.destroy({
+      where: { equation: equationId },
+      transaction,
+    });
+
+    await Equation.destroy({
+      where: { id: equationId },
+      transaction, // Use the transaction here
+    });
+
+    await transaction.commit();
+  } catch (error) {
+    await transaction.rollback();
+    throw error;
+  }
+};
+
 module.exports = {
   createEquation,
   createParameters,
   solveEquation,
   getEquationsByUserId,
+  deleteEquationById,
 };

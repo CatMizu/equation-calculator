@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import axios from "axios";
 import { addStyles, EditableMathField, StaticMathField } from "react-mathquill";
 import Parameter from "./Parameter";
-import { useAuth } from "../utils/auth";
+import { useAuth } from "../../utils/auth";
 import styles from "./Equation.module.css";
-import validateEquationInput from "../utils/equationInputValidator";
+import validateEquationInput from "../../utils/equationInputValidator";
 
 addStyles();
 
-function Equation({ equationData }) {
-  const [equation, setEquation] = useState(equationData.latex);
+function Equation({ equationData, onSaveEquation, onDeleteEquation }) {
+  const [equationLatex, setEquationLatex] = useState(equationData.latex);
   const [solveFor, setSolveFor] = useState("");
   const [parameters, setParameters] = useState(equationData.parameters || {});
   const [solution, setSolution] = useState("");
@@ -39,17 +39,17 @@ function Equation({ equationData }) {
   };
 
   const handleEquationChange = (mathField) => {
-    setEquation(mathField.latex());
+    setEquationLatex(mathField.latex());
   };
 
   const handleSolveForChange = (event) => {
     setSolveFor(event.target.value);
   };
 
-  const handleSolveEquation = async (event) => {
-    event.preventDefault();
-
-    validateEquationInput(equation, solveFor, parameters);
+  const handleSolveEquation = async () => {
+    if (!validateEquationInput(equationLatex, solveFor, parameters)) {
+      return;
+    }
 
     try {
       const token = await auth.getSession();
@@ -57,7 +57,7 @@ function Equation({ equationData }) {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/equations/solve`,
         {
-          latex: equation,
+          latex: equationLatex,
           parameters,
           solveFor,
         },
@@ -75,44 +75,30 @@ function Equation({ equationData }) {
     }
   };
 
-  const handleSave = async (event) => {
-    event.preventDefault();
-
-    try {
-      const token = await auth.getSession();
-      const accessToken = token.access.token;
-      await axios.post(
-        `${process.env.REACT_APP_API_URL}/equations`,
-        {
-          latex: equation,
-          parameters,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      alert("Equation saved successfully!");
-    } catch (error) {
-      console.error("Failed to save the equation", error);
-    }
-  };
-
   return (
     <div className={styles["equation-panel"]}>
-      <button className={styles["delete-panel-button"]}>x</button>
+      <button
+        className={styles["delete-panel-button"]}
+        onClick={() => {
+          onDeleteEquation(equationData.id);
+        }}
+      >
+        x
+      </button>
       <div className={styles["equation-content"]}>
         <h3>Equation:</h3>
         <div>
-          <EditableMathField latex={equation} onChange={handleEquationChange} />
+          <EditableMathField
+            latex={equationLatex}
+            onChange={handleEquationChange}
+          />
         </div>
         <h3>Solve for:</h3>
         <input
           type="text"
           value={solveFor}
           onChange={handleSolveForChange}
-          placeholder="Enter a variable to solve"
+          placeholder="Enter variable to solve"
         />
 
         <h3>Parameters:</h3>
@@ -143,7 +129,13 @@ function Equation({ equationData }) {
       </div>
       <div className={styles["button-container"]}>
         <button onClick={handleSolveEquation}>Solve</button>
-        <button onClick={handleSave}>Save Equation</button>
+        <button
+          onClick={() => {
+            onSaveEquation(equationLatex, parameters);
+          }}
+        >
+          Save Equation
+        </button>
       </div>
     </div>
   );

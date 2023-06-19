@@ -10,8 +10,6 @@
   min-height: 150px;
 }
 
-
-
 .equation-content {
   border-radius: 10px;
   padding: 20px;
@@ -24,8 +22,8 @@
   background-color: red;
   border: none;
   color: white;
-  width: 20px; /* Adjust the width of the button */
-  height: 20px; /* Adjust the height of the button */
+  width: 20px; 
+  height: 20px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -37,15 +35,12 @@
 
 }
 
-/* Define the hover effect for the button */
 .delete-panel-button:hover {
   background-color: darkred;
 }
 
-
-
 input[type="text"] {
-  width: auto;
+  width: 60;
   padding: 0.5em;
   margin: 0.5em 0;
   border: 1px solid #B2EBF2;
@@ -65,11 +60,9 @@ button {
   margin: 4px 2px;
   cursor: pointer;
   transition-duration: 0.4s;
-  max-width: 30%; /* Set a maximum width for the button */
-  border-radius: 5px; /* Make the corners round */
+  max-width: 30%;
+  border-radius: 5px;
 }
-
-
 
 button:hover {
   background-color: #26C6DA;

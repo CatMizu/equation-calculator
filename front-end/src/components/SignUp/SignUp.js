@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./SignUp.module.css";
-import { useAuth } from "../utils/auth";
+import { useAuth } from "../../utils/auth";
 import {
   validatePassword,
   getInvalidDetails,
-} from "../utils/passwordValidator";
+} from "../../utils/passwordValidator";
 
 function Signup() {
   const [email, setEmail] = useState("");
@@ -34,10 +34,8 @@ function Signup() {
       navigate("/");
     } catch (error) {
       console.error("sign up failed", error);
-      alert(`sign up failed: ${error.response.data.message}`);
+      alert(`sign up failed: ${error}`);
     }
-    console.log("Email:", email);
-    console.log("Password:", password);
   };
 
   return (

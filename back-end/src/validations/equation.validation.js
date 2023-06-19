@@ -21,7 +21,14 @@ const solveEquation = {
   }),
 };
 
+const deleteEquation = {
+  params: Joi.object().keys({
+    id: Joi.number().integer().required(),
+  }),
+};
+
 module.exports = {
   createEquation,
   solveEquation,
+  deleteEquation,
 };

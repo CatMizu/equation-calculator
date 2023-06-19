@@ -13,4 +13,6 @@ router
 
 router.route('/solve').post(auth(), validate(equationValidation.solveEquation), equationController.solveEquation);
 
+router.route('/:id').delete(auth(), validate(equationValidation.deleteEquation), equationController.deleteEquation);
+
 module.exports = router;
