@@ -7,8 +7,8 @@ function Home() {
   const [equations, setEquations] = useState([]);
   const auth = useAuth();
   const exampleEquation = {
-    latex: "x=1",
-    parameters: [{ name: "", value: "" }],
+    latex: "x+y=2",
+    parameters: { y: 1 },
   };
 
   useEffect(() => {

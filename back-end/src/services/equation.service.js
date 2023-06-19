@@ -71,12 +71,10 @@ const getEquationsByUserId = async (userId) => {
   const result = user.equations.map((equation) => {
     return {
       latex: equation.latex,
-      parameters: equation.parameters.map((parameter) => {
-        return {
-          name: parameter.name,
-          value: parameter.value,
-        };
-      }),
+      parameters: equation.parameters.reduce((obj, parameter) => {
+        obj[parameter.name] = parameter.value;
+        return obj;
+      }, {}),
     };
   });
 

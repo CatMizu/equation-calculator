@@ -10,28 +10,30 @@ addStyles();
 function Equation({ equationData }) {
   const [equation, setEquation] = useState(equationData.latex);
   const [solveFor, setSolveFor] = useState("");
-  const [parameters, setParameters] = useState(equationData.parameters);
+  const [parameters, setParameters] = useState(equationData.parameters || {});
   const [solution, setSolution] = useState("");
   const auth = useAuth();
 
   const addParameter = () => {
-    setParameters([...(parameters || []), { name: "", value: "" }]);
+    setParameters({ ...parameters, "": "" });
   };
 
-  const handleParametersChange = (index, name, event) => {
-    const values = [...parameters];
+  const handleParametersChange = (oldName, name, event) => {
     if (name === "name") {
-      values[index].name = event.target.value;
+      setParameters((prevParameters) => {
+        const value = prevParameters[oldName];
+        const { [oldName]: _, ...newParameters } = prevParameters;
+
+        return { ...newParameters, [event.target.value]: value };
+      });
     } else {
-      values[index].value = event.target.value;
+      setParameters({ ...parameters, [oldName]: event.target.value });
     }
-    setParameters(values);
   };
 
-  const deleteParameter = (index) => {
-    const values = [...parameters];
-    values.splice(index, 1);
-    setParameters(values);
+  const deleteParameter = (name) => {
+    const { [name]: _, ...rest } = parameters;
+    setParameters(rest);
   };
 
   const handleEquationChange = (mathField) => {
@@ -45,13 +47,18 @@ function Equation({ equationData }) {
   const handleSolveEquation = async (event) => {
     event.preventDefault();
 
-    const parametersObject = parameters.reduce(
-      (acc, param) => ({ ...acc, [param.name]: param.value }),
-      {}
-    );
+    if (!equation.includes(solveFor)) {
+      alert("The solveFor value must exist within the equation");
+      return;
+    }
 
-    if (!/^[a-zA-Z]{1}$/.test(solveFor) || !equation.includes(solveFor)) {
-      alert("Invalid solveFor value");
+    if (!/^[a-zA-Z]{1}$/.test(solveFor)) {
+      alert("The solveFor value be a single letter");
+      return;
+    }
+
+    if (solveFor in parameters) {
+      alert("The solveFor value cannot be a parameter");
       return;
     }
 
@@ -62,7 +69,7 @@ function Equation({ equationData }) {
         `${process.env.REACT_APP_API_URL}/equations/solve`,
         {
           latex: equation,
-          parameters: parametersObject,
+          parameters,
           solveFor,
         },
         {
@@ -81,11 +88,6 @@ function Equation({ equationData }) {
   const handleSave = async (event) => {
     event.preventDefault();
 
-    const parametersObject = parameters.reduce(
-      (acc, param) => ({ ...acc, [param.name]: param.value }),
-      {}
-    );
-    console.log(parametersObject);
     try {
       const token = await auth.getSession();
       const accessToken = token.access.token;
@@ -93,7 +95,7 @@ function Equation({ equationData }) {
         `${process.env.REACT_APP_API_URL}/equations`,
         {
           latex: equation,
-          parameters: parametersObject,
+          parameters,
         },
         {
           headers: {
@@ -118,22 +120,21 @@ function Equation({ equationData }) {
         type="text"
         value={solveFor}
         onChange={handleSolveForChange}
-        placeholder="Enter the variable to solve for"
+        placeholder="Enter a variable to solve"
       />
 
       <h3>Parameters:</h3>
-      {parameters &&
-        parameters.map((parameter, index) => (
-          <Parameter
-            key={index}
-            index={index}
-            parameter={parameter}
-            onParameterChange={(name, event) =>
-              handleParametersChange(index, name, event)
-            }
-            onParameterDelete={() => deleteParameter(index)}
-          />
-        ))}
+      {Object.entries(parameters).map(([name, value], index) => (
+        <Parameter
+          key={index}
+          index={index}
+          parameter={{ name, value }}
+          onParameterChange={(newName, event) =>
+            handleParametersChange(name, newName, event)
+          }
+          onParameterDelete={() => deleteParameter(name)}
+        />
+      ))}
 
       <button onClick={addParameter}>Add Parameter</button>
       <button onClick={handleSolveEquation}>Solve</button>
