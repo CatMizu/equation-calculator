@@ -20,7 +20,7 @@ git clone https://github.com/CatMizu/equation-calculator.git
 2. Navigate to the project directory:
 
 ```bash
-cd Equation\ Calculator/
+cd equation-calculator
 ```
 3. Running the Application
 
