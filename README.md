@@ -59,9 +59,20 @@ You could save a equation to your account by clicking "Save Equation" button, yo
 ## Check the API documentation and Database schema
 The backend of the application integrates Swagger to manage and provide API documentation and schema documentation. To access this documentation and schema, please proceed as follows:
 
-1. modify the Dockerfile located in `/back-end/Dockerfile`. change `CMD ["yarn", "start"]` into `CMD ["yarn", "dev"]`, this will start the dev environment in the container.
-2. run `docker-compose up` again under the `/equation-calculator`
+1. modify the Dockerfile located in `/back-end/Dockerfile`. change `CMD ["yarn", "start"]` to `CMD ["yarn", "dev"]`, this will start the dev environment in the container.
+2. run `docker-compose up` again under the `/equation-calculator`, in this way, we will use the MySQL server from the docker container, and you don't need to set up your local MySQL database.
 3. visit `localhost:3000/v1/docs` from the browser, Here, you will find detailed information on the backend API and the database schema.
 
 
 ## Futrure Improvment
+While this project already fully meets the requirements, there are still many areas for improvement that I plan to enhance in the future:
+
+1. Use a CSS library like Bootstrap to improve the front-end styling. The reason I haven't used it until now is because I wanted to show some raw CSS code.
+
+2. There's an extensive use of `alert()` and error response handling in the front end, which can be further improved.
+
+3. Additional account functionalities, such as "reset password", "forgot password", and "registration validation" through email, need to be implemented.
+
+4. Regarding the back-end calculation logic, the answers returned by nerdamer sometimes don't follow conventional reading habits, and many formulas can't be simplified. I need to find a better solution.
+
+5. I aim to incorporate more extensive testing into the project, including integration tests, unit tests, and e2e tests.
