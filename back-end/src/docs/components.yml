@@ -19,6 +19,35 @@ components:
         name: fake name
         role: user
 
+    Equation:
+      type: object
+      properties:
+        latex:
+          type: string
+        user:
+          type: integer
+        parameters:
+          $ref: '#/components/schemas/Parameter'
+      example:
+        latex: "x^2+y^2=z^2"
+        user: 1
+        parameters:
+          x: 1
+          y: 2
+
+    Parameter:
+      type: object
+      properties:
+        equation:
+          type: integer
+        name:
+          type: string
+        value:
+          type: integer
+      example:
+        equation: 1
+        name: "x"
+        value: 10
     Token:
       type: object
       properties:
