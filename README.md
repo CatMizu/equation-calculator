@@ -30,3 +30,19 @@ The application has been Dockerized, which means you can easily run the entire a
 docker-compose up
 ```
 The application will be accessible at http://localhost:4000.
+
+## Use the Calculator
+The following instructions will help you to use the equation calculator
+
+### Sign-up and Login
+
+### Solve your equation
+
+
+
+
+
+
+
+
+## 
