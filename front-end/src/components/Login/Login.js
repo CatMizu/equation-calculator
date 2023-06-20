@@ -15,7 +15,7 @@ function Login() {
       await auth.login(email, password);
       navigate("/home");
     } catch (error) {
-      alert("Login failed", error);
+      alert(`Login failed: ${error.response.data.message}`);
     }
   };
 

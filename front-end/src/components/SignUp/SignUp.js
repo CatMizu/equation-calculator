@@ -30,6 +30,7 @@ function Signup() {
 
     try {
       await auth.signUp(name, email, password);
+      alert("Congratulations, your account has been successfully created.")
       navigate("/");
     } catch (error) {
       console.error("sign up failed", error);
