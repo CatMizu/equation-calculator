@@ -19,6 +19,7 @@ services:
         condition: service_healthy
     volumes:
       - ./back-end:/usr/src/node-app
+      - /usr/src/node-app/node_modules
     networks:
       - node-network
 
@@ -47,6 +48,7 @@ services:
       - '4000:4000'
     volumes:
       - ./front-end:/app
+      - /app/node_modules
     networks:
       - node-network
 
