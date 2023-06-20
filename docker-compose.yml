@@ -7,10 +7,10 @@ services:
       dockerfile: Dockerfile
     image: node-app
     environment:
-      - DB_HOST=127.0.0.1
+      - DB_HOST=mysql
       - DB_USERNAME=root
-      - DB_PASSWORD=
-      - DB_NAME=equation_calculator
+      - DB_PASSWORD=my-secret-pw
+      - DB_NAME=my-database
       - DB_DIALECT=mysql
     ports:
       - '3000:3000'
