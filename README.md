@@ -60,8 +60,9 @@ You could save a equation to your account by clicking "Save Equation" button, yo
 The backend of the application integrates Swagger to manage and provide API documentation and schema documentation. To access this documentation and schema, please proceed as follows:
 
 1. modify the Dockerfile located in `/back-end/Dockerfile`. change `CMD ["yarn", "start"]` to `CMD ["yarn", "dev"]`, this will start the dev environment in the container.
-2. run `docker-compose up` again under the `/equation-calculator`, in this way, we will use the MySQL server from the docker container, and you don't need to set up your local MySQL database.
-3. visit `localhost:3000/v1/docs` from the browser, Here, you will find detailed information on the backend API and the database schema.
+2. delete the old node image `node-app`
+3. run `docker-compose up` again under the `/equation-calculator` folder, we will use the MySQL server from the docker container, and you don't need to set up your local MySQL database.
+4. visit `localhost:3000/v1/docs` from the browser, Here, you will find detailed information on the backend API and the database schema.
 
 
 ## Futrure Improvment
