@@ -31,18 +31,30 @@ docker-compose up
 ```
 The application will be accessible at http://localhost:4000.
 
+
+
 ## Use the Calculator
 The following instructions will help you to use the equation calculator
 
 ### Sign-up and Login
+1. Visit http://localhost:4000 in your web browser.
+2. Click on the 'Create a new account' button on the homepage.
+3. Fill in your details, such as username and password, then click 'Sign Up'.
+4. You will be redirected to the login page. Enter your login credentials and click 'Login'.
 
 ### Solve your equation
 
+1. Once you're logged in, you will be redirected to the home page, there will be a example equation on the home page.
+2. The app is interaged with Mathquill, you could use the integrated MathQuill functionality to easily input mathematical symbols and expressions.
+3. Once you have entered your equation, enter the varaible that you want to sovle for under "Solve for" 
+4. You could also enter or delete any parameters before solve.
+5. Once you have your equaiton ready, hit the "Solve" button and you will see the reasult in the equation panel.
+
+### Save & Delete your equation
+
+You could save a equation to your account by clicking "Save Equation" button, you could also delete one by clicking the "X" button at the top-right corner of the equation panel.
 
 
 
-
-
-
-
-## 
+## Check the API documentation and Database schema
+Inorder to
