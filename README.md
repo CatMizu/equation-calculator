@@ -29,7 +29,7 @@ The application has been Dockerized, which means you can easily run the entire a
 ```bash
 docker-compose up
 ```
-The application will be accessible at http://localhost:4000.
+The application will be accessible at `http://localhost:4000`.
 
 
 
@@ -37,7 +37,7 @@ The application will be accessible at http://localhost:4000.
 The following instructions will help you to use the equation calculator
 
 ### Sign-up and Login
-1. Visit http://localhost:4000 in your web browser.
+1. Visit `http://localhost:4000` in your web browser.
 2. Click on the 'Create a new account' button on the homepage.
 3. Fill in your details, such as username and password, then click 'Sign Up'.
 4. You will be redirected to the login page. Enter your login credentials and click 'Login'.
@@ -57,4 +57,11 @@ You could save a equation to your account by clicking "Save Equation" button, yo
 
 
 ## Check the API documentation and Database schema
-Inorder to
+The backend of the application integrates Swagger to manage and provide API documentation and schema documentation. To access this documentation and schema, please proceed as follows:
+
+1. modify the Dockerfile located in `/back-end/Dockerfile`. change `CMD ["yarn", "start"]` into `CMD ["yarn", "dev"]`, this will start the dev environment in the container.
+2. run `docker-compose up` again under the `/equation-calculator`
+3. visit `localhost:3000/v1/docs` from the browser, Here, you will find detailed information on the backend API and the database schema.
+
+
+## Futrure Improvment
