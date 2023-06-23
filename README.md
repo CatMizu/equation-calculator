@@ -45,7 +45,7 @@ The following instructions will help you to use the equation calculator
 ### Solve your equation
 
 1. Once you're logged in, you will be redirected to the home page, there will be a example equation on the home page.
-2. The app is interaged with Mathquill, you could use the integrated MathQuill functionality to easily input mathematical symbols and expressions.
+2. The app is interaged with [MathQuill](http://mathquill.com/), you could use the integrated MathQuill functionality to easily input mathematical symbols and expressions.
 3. Once you have entered your equation, enter the varaible that you want to sovle for under "Solve for" 
 4. You could also enter or delete any parameters before solve.
 5. Once you have your equaiton ready, hit the "Solve" button and you will see the reasult in the equation panel.
