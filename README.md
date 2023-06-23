@@ -70,10 +70,12 @@ While this project already fully meets the requirements, there are still many ar
 
 1. Need unit tests
 
-2. Use a CSS library like Bootstrap to improve the front-end styling. The reason I haven't used it until now is because I wanted to show some raw CSS code.
+2. User Managment system
 
-3. There's an extensive use of `alert()` and error response handling in the front end, which can be further improved.
+3. Use a CSS library like Bootstrap to improve the front-end styling. The reason I haven't used it until now is because I wanted to show some raw CSS code.
 
-4. Additional account functionalities, such as "reset password", "forgot password", and "registration validation" through email, need to be implemented.
+4. There's an extensive use of `alert()` and error response handling in the front end, which can be further improved.
 
-5. Regarding the back-end calculation logic, the answers returned by nerdamer sometimes don't follow conventional reading habits, and many formulas can't be simplified. I need to find a better solution.
+5. Additional account functionalities, such as "reset password", "forgot password", and "registration validation" through email, need to be implemented.
+
+6. Regarding the back-end calculation logic, the answers returned by nerdamer sometimes don't follow conventional reading habits, and many formulas can't be simplified. I need to find a better solution.
