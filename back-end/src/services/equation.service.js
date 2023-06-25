@@ -38,9 +38,9 @@ const createEquation = async (latex, parameters, userId) => {
  * @param {string} latexString
  * @param {Object} parameters
  * @param {string} solveFor
- * @returns {Promise<string>}
+ * @returns {string}
  */
-const solveEquation = async (latexString, parameters, solveFor) => {
+const solveEquation = (latexString, parameters, solveFor) => {
   let equationString = nerdamer.convertFromLaTeX(latexString);
 
   // simplify with parameter values
